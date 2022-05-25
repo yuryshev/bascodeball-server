@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CF9F14B9-090
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C5DFCD66-780B-441E-9525-DD18FA354B66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleAuthorization.API", "src\GoogleAuthorization.API\GoogleAuthorization.API.csproj", "{4D32D899-5763-446A-A993-25282277537D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthorizationApi", "src\AuthorizationApi\AuthorizationApi.csproj", "{4D32D899-5763-446A-A993-25282277537D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lobby.SignalR", "src\Lobby.SignalR\Lobby.SignalR.csproj", "{05CC0053-637C-4643-B885-1BA71FBA3992}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LobbyApi", "src\LobbyApi\LobbyApi.csproj", "{05CC0053-637C-4643-B885-1BA71FBA3992}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
