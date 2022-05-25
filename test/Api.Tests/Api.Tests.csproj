@@ -31,4 +31,10 @@
       <ProjectReference Include="..\..\src\Api\Api.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="appsettings.ApiTests.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
 </Project>
