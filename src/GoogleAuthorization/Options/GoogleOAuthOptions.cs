@@ -1,4 +1,4 @@
-﻿namespace GoogleAuthorization.API.Options
+﻿namespace GoogleAuthorization.Options
 {
     public class GoogleOAuthOptions
     {

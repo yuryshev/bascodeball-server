@@ -1,10 +1,10 @@
-﻿using GoogleAuthorization.API.Dtos;
-using GoogleAuthorization.API.Options;
-using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 using System.Text.Json;
+using GoogleAuthorization.Dtos;
+using GoogleAuthorization.Options;
 
-namespace GoogleAuthorization.API.Services
+namespace GoogleAuthorization.Services
 {
     public class GoogleAuthorizationService
     {

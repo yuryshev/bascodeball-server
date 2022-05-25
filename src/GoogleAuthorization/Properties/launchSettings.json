@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "GoogleAuthorization.API": {
+    "AuthorizationApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

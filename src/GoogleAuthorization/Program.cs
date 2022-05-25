@@ -1,4 +1,4 @@
-using GoogleAuthorization.API.Services;
+using GoogleAuthorization.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace GoogleAuthorization.API.Dtos
+namespace GoogleAuthorization.Dtos
 {
     public class AccessTokenPayloadDto
     {

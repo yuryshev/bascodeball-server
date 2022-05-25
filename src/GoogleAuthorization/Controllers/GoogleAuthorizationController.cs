@@ -1,8 +1,7 @@
-﻿using GoogleAuthorization.API.Services;
-using Microsoft.AspNetCore.Http;
+﻿using GoogleAuthorization.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GoogleAuthorization.API.Controllers
+namespace GoogleAuthorization.Controllers
 {
     [Route("api/google/authorization")]
     [ApiController]
