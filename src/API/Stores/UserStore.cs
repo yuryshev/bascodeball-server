@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using API.Models.DbModels;
 using Common.OperatingModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,16 +13,41 @@ public class UserStore
         this._dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public async Task<GetEntityResult<List<string>>> GetUsersEmails()
+    public async Task<GetEntityResult<List<User>>> GetUsersAsync()
     {
         try
         {
-            var emails = await this._dbContext.Users.Select(x => x.Email).ToListAsync();
-            return GetEntityResult<List<string>>.FromFound(emails);
+            var users = await this._dbContext.Users.ToListAsync();
+            if (users == null || users.Count == 0)
+            {
+                return GetEntityResult<List<User>>.FromNotFound();
+            }
+            return GetEntityResult<List<User>>.FromFound(users);
         }
-        catch (Exception ex)
+        catch
         {
-            throw new Exception(ex.Message);
+            return GetEntityResult<List<User>>.FromDbError();
+        }
+    }
+    
+    public async Task<GetEntityResult<User>> AddUserAsync(string email, string loginName)
+    {
+        try
+        {
+            var user = new User
+            {
+                Email = email,
+                LoginName = loginName,
+                Role = "user",
+            };
+
+            await this._dbContext.Users.AddAsync(user);
+            await this._dbContext.SaveChangesAsync();
+            return GetEntityResult<User>.FromFound(user);
+        }
+        catch
+        {
+            return GetEntityResult<User>.FromDbError();
         }
     }
 }

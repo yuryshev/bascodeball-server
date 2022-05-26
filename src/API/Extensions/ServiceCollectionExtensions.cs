@@ -1,4 +1,6 @@
 ﻿using API.Data;
+using API.Interfaces;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
@@ -14,7 +16,7 @@ public class ServiceCollectionExtensions
     
     public void AddApiServices(IConfiguration configuration)
     {
-        
+        _collection.AddScoped<IIdentityService, GetIdentityService>();
     }
 
     public void AddPgDbContext(string connectionString)

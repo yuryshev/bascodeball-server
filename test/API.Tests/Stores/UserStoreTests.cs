@@ -34,30 +34,63 @@ public class UserStoreTests
     }
     
     [Fact]
-    public async Task GetDispatchFileHeadersAsync_NoAppropriateData_ReturnsEmptyList()
+    public async Task GetUsersAsync_CorrectUsersData_DbDataAdded()
     {
         // Arrange
         var user1 = new User
         {
             Email = "test_email1",
             LoginName = "test_login1",
+            Role = "user",
         };
         
         var user2 = new User
         {
             Email = "test_email2",
             LoginName = "test_login2",
+            Role = "user",
         };
 
         this._dbContext.AddRange(user1, user2);
         await this._dbContext.SaveChangesAsync();
 
         // Act
-        var result = await this._store.GetUsersEmails();
+        var result = await this._store.GetUsersAsync();
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal(GetEntityResult<List<string>>.ResultType.Found, result.Status);
+        Assert.Equal(GetEntityResult<List<User>>.ResultType.Found, result.Status);
         Assert.Equal(2, result.Entity.Count);
+    }
+    
+    [Fact]
+    public async Task AddUserAsync_CorrectUsersData_DbDataAdded()
+    {
+        // Arrange
+        var user1 = new User
+        {
+            Email = "test_email1",
+            LoginName = "test_login1",
+            Role = "user",
+        };
+        
+        var user2 = new User
+        {
+            Email = "test_email2",
+            LoginName = "test_login2",
+            Role = "user",
+        };
+
+        this._dbContext.AddRange(user1);
+        await this._dbContext.SaveChangesAsync();
+
+        // Act
+        var result = await this._store.AddUserAsync(user2.Email, user2.LoginName);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(GetEntityResult<User>.ResultType.Found, result.Status);
+        Assert.Equal(user2.Email, result.Entity.Email);
+        Assert.Equal(user2.LoginName, result.Entity.LoginName);
     }
 }
