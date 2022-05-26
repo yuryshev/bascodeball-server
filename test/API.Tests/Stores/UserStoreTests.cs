@@ -1,11 +1,11 @@
-﻿using Api.Data;
-using Api.Models;
-using Api.Stores;
+﻿using API.Data;
+using API.Models.DbModels;
+using API.Stores;
 using Common.OperatingModels;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace Api.Tests.Stores;
+namespace API.Tests.Stores;
 
 [Collection("Pg db collection")]
 public class UserStoreTests
