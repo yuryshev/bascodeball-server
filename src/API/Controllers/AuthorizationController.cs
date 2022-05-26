@@ -12,9 +12,10 @@ public class AuthorizationController : Controller
     private GetIdentityService _service;
     private UserStore _store;
 
-    public AuthorizationController(GetIdentityService service)
+    public AuthorizationController(GetIdentityService service, UserStore store)
     {
         _service = service;
+        _store = store;
     }
     
     [HttpPost("/token")]

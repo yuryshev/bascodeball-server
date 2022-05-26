@@ -14,7 +14,6 @@ public class ServiceCollectionExtensions
     
     public void AddApiServices(IConfiguration configuration)
     {
-        
     }
 
     public void AddPgDbContext(string connectionString)
