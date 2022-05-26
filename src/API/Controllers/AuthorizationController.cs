@@ -1,10 +1,7 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using API.Models.AuthModels;
+﻿using System.Security.Claims;
 using API.Services;
 using Common.OperatingModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace API.Controllers;
 [ApiController]
@@ -39,22 +36,7 @@ public class AuthorizationController : Controller
         }
 
         var identity = identityResult.Entity;
-        var now = DateTime.UtcNow;
-        // создаем JWT-токен
-        var jwt = new JwtSecurityToken(
-            issuer: AuthOptions.ISSUER,
-            audience: AuthOptions.AUDIENCE,
-            notBefore: now,
-            claims: identity.Claims,
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
- 
-        var response = new
-        {
-            access_token = encodedJwt,
-            email = identity.Name
-        };
- 
-        return Json(response);
+        return GenerateJwtService.GenerateJwtToken(identity);
+
     }
 }
