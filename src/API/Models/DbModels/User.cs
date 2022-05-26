@@ -17,4 +17,7 @@ public class User
     /// Gets or sets Email.
     /// </summary>
     public string Email { get; set; }
+
+    public string Role { get; set; }
+    
 }

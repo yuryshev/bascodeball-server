@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using API.Models.DbModels;
 using Common.OperatingModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,16 +13,20 @@ public class UserStore
         this._dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public async Task<GetEntityResult<List<string>>> GetUsersEmails()
+    public async Task<GetEntityResult<List<User>>> GetUsers()
     {
         try
         {
-            var emails = await this._dbContext.Users.Select(x => x.Email).ToListAsync();
-            return GetEntityResult<List<string>>.FromFound(emails);
+            var users = await this._dbContext.Users.ToListAsync();
+            if (users == null || users.Count == 0)
+            {
+                return GetEntityResult<List<User>>.FromNotFound();
+            }
+            return GetEntityResult<List<User>>.FromFound(users);
         }
-        catch (Exception ex)
+        catch
         {
-            throw new Exception(ex.Message);
+            return GetEntityResult<List<User>>.FromDbError();
         }
     }
 }
