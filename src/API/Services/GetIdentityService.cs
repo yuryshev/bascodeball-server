@@ -19,7 +19,7 @@ public class GetIdentityService
     {
         try
         {
-            var usersResult = await _store.GetUsers();
+            var usersResult = await _store.GetUsersAsync();
             if (!usersResult.IsSuccess)
             {
                 if (usersResult.Status == GetEntityResult<List<User>>.ResultType.DatabaseError)

@@ -55,7 +55,7 @@ public class UserStoreTests
         await this._dbContext.SaveChangesAsync();
 
         // Act
-        var result = await this._store.GetUsers();
+        var result = await this._store.GetUsersAsync();
 
         // Assert
         Assert.True(result.IsSuccess);

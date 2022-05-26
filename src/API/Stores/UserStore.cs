@@ -13,7 +13,7 @@ public class UserStore
         this._dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public async Task<GetEntityResult<List<User>>> GetUsers()
+    public async Task<GetEntityResult<List<User>>> GetUsersAsync()
     {
         try
         {
@@ -27,6 +27,27 @@ public class UserStore
         catch
         {
             return GetEntityResult<List<User>>.FromDbError();
+        }
+    }
+    
+    public async Task<GetEntityResult<User>> AddUserAsync(string email, string loginName)
+    {
+        try
+        {
+            var user = new User
+            {
+                Email = email,
+                LoginName = loginName,
+                Role = "user",
+            };
+
+            await this._dbContext.Users.AddAsync(user);
+            await this._dbContext.SaveChangesAsync();
+            return GetEntityResult<User>.FromFound(user);
+        }
+        catch
+        {
+            return GetEntityResult<User>.FromDbError();
         }
     }
 }
