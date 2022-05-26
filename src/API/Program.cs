@@ -1,7 +1,7 @@
-using Api.Data;
 using API.Extensions;
 using App.Metrics.Health.Builder;
 using App.Metrics.Health.Checks.Sql;
+using Common.ConvertingModel;
 using Npgsql;
 
 
