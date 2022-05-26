@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using API.Interfaces;
 using API.Services;
 using API.Stores;
 using Common.OperatingModels;
@@ -9,17 +10,15 @@ namespace API.Controllers;
 [Route("/[controller]/[action]")]
 public class AuthorizationController : Controller
 {
-    private GetIdentityService _service;
-    private UserStore _store;
+    private IIdentityService _service;
 
-    public AuthorizationController(GetIdentityService service, UserStore store)
+    public AuthorizationController(IIdentityService service)
     {
         _service = service;
-        _store = store;
     }
     
     [HttpPost("/token")]
-    public async Task<IActionResult> Token(string email)
+    public async Task<IActionResult> TokenAsync(string email)
     {
         var identityResult = await _service.GetIdentity(email);
         if (!identityResult.IsSuccess)
@@ -43,21 +42,11 @@ public class AuthorizationController : Controller
     }
     
     [HttpPost("/reg")]
-    public async Task<IActionResult> Registration(string email, string loginName)
+    public async Task<IActionResult> RegistrationAsync(string email, string loginName)
     {
-        var userResult = await this._store.AddUserAsync(email, loginName);
-        if (!userResult.IsSuccess)
-        {
-            return BadRequest(new { errorText = "Database error." });
-        }
-
-        var identityResult = await _service.GetIdentity(email);
+        var identityResult = await _service.RegIdentity(email, loginName);
         if (!identityResult.IsSuccess)
         {
-            if (identityResult.Status == GetEntityResult<ClaimsIdentity>.ResultType.NotFound)
-            {
-                return BadRequest(new { errorText = "Invalid email." });
-            }
             if (identityResult.Status == GetEntityResult<ClaimsIdentity>.ResultType.UnexpectedError)
             {
                 return BadRequest(new { errorText = "Unexpected error." });

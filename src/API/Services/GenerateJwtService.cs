@@ -25,7 +25,7 @@ public static class GenerateJwtService
             email = identity.Name
         };
 
-        return new JsonResult(identity);
+        return new JsonResult(response);
     }
     
 }

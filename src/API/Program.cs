@@ -5,7 +5,7 @@ using App.Metrics.Health.Checks.Sql;
 using Common.ConvertingModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Npgsql;
+using Npgsql; 
 
 
 var builder = WebApplication.CreateBuilder(args);
