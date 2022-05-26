@@ -41,23 +41,25 @@ public class UserStoreTests
         {
             Email = "test_email1",
             LoginName = "test_login1",
+            Role = "user",
         };
         
         var user2 = new User
         {
             Email = "test_email2",
             LoginName = "test_login2",
+            Role = "user",
         };
 
         this._dbContext.AddRange(user1, user2);
         await this._dbContext.SaveChangesAsync();
 
         // Act
-        var result = await this._store.GetUsersEmails();
+        var result = await this._store.GetUsers();
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal(GetEntityResult<List<string>>.ResultType.Found, result.Status);
+        Assert.Equal(GetEntityResult<List<User>>.ResultType.Found, result.Status);
         Assert.Equal(2, result.Entity.Count);
     }
 }
