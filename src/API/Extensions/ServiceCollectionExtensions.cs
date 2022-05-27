@@ -17,6 +17,7 @@ public class ServiceCollectionExtensions
     public void AddApiServices(IConfiguration configuration)
     {
         _collection.AddScoped<IIdentityService, GetIdentityService>();
+        _collection.AddScoped<IUserService, UserService>();
     }
 
     public void AddPgDbContext(string connectionString)

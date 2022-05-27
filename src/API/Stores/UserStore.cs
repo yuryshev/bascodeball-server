@@ -30,6 +30,23 @@ public class UserStore
         }
     }
     
+    public async Task<GetEntityResult<User>> GetUserByEmailAsync(string email)
+    {
+        try
+        {
+            var user = await this._dbContext.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return GetEntityResult<User>.FromNotFound();
+            }
+            return GetEntityResult<User>.FromFound(user);
+        }
+        catch
+        {
+            return GetEntityResult<User>.FromDbError();
+        }
+    }
+    
     public async Task<GetEntityResult<User>> AddUserAsync(string email, string loginName)
     {
         try

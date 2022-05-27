@@ -1,26 +1,26 @@
 ﻿using System.Security.Claims;
 using API.Interfaces;
 using API.Services;
-using API.Stores;
 using Common.OperatingModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
+
 [ApiController]
 [Route("/[controller]/[action]")]
 public class AuthorizationController : Controller
 {
-    private IIdentityService _service;
+    private IIdentityService _identityService;
 
-    public AuthorizationController(IIdentityService service)
+    public AuthorizationController(IIdentityService identityService)
     {
-        _service = service;
+        _identityService = identityService;
     }
     
-    [HttpPost("/token")]
+    [HttpGet("/token")]
     public async Task<IActionResult> TokenAsync(string email)
     {
-        var identityResult = await _service.GetIdentity(email);
+        var identityResult = await _identityService.GetIdentity(email);
         if (!identityResult.IsSuccess)
         {
             if (identityResult.Status == GetEntityResult<ClaimsIdentity>.ResultType.NotFound)
@@ -44,7 +44,7 @@ public class AuthorizationController : Controller
     [HttpPost("/reg")]
     public async Task<IActionResult> RegistrationAsync(string email, string loginName)
     {
-        var identityResult = await _service.RegIdentity(email, loginName);
+        var identityResult = await _identityService.RegIdentity(email, loginName);
         if (!identityResult.IsSuccess)
         {
             if (identityResult.Status == GetEntityResult<ClaimsIdentity>.ResultType.UnexpectedError)

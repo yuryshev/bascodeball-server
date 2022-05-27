@@ -20,35 +20,29 @@ public class GetIdentityService : IIdentityService
     {
         try
         {
-            var usersResult = await _store.GetUsersAsync();
+            var usersResult = await _store.GetUserByEmailAsync(inputEmail);
             if (!usersResult.IsSuccess)
             {
-                if (usersResult.Status == GetEntityResult<List<User>>.ResultType.DatabaseError)
+                if (usersResult.Status == GetEntityResult<User>.ResultType.DatabaseError)
                 {
                     return GetEntityResult<ClaimsIdentity>.FromDbError();
                 } 
-                if (usersResult.Status == GetEntityResult<List<User>>.ResultType.NotFound)
+                if (usersResult.Status == GetEntityResult<User>.ResultType.NotFound)
                 {
                     return GetEntityResult<ClaimsIdentity>.FromNotFound();
                 }
             }
 
-            var user = usersResult.Entity.Find(x => x.Email == inputEmail);
-
-            if (user != null)
+            var user = usersResult.Entity;
+            var claims = new List<Claim>
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
-                };
-                ClaimsIdentity claimsIdentity =
-                    new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                        ClaimsIdentity.DefaultRoleClaimType);
-                return GetEntityResult<ClaimsIdentity>.FromFound(claimsIdentity);
-            }
-            
-            return GetEntityResult<ClaimsIdentity>.FromNotFound();;
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
+            };
+            ClaimsIdentity claimsIdentity =
+                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, 
+                    ClaimsIdentity.DefaultRoleClaimType);
+            return GetEntityResult<ClaimsIdentity>.FromFound(claimsIdentity);
         }
         catch (Exception ex)
         {
