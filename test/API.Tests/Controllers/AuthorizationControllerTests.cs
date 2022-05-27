@@ -10,11 +10,11 @@ namespace API.Tests.Controllers;
 
 public class AuthorizationControllerTests
 {
-    private readonly Mock<IIdentityService> _serviceMock;
+    private readonly Mock<IIdentityService> _identityServiceMock;
 
     public AuthorizationControllerTests()
     {
-        this._serviceMock = new Mock<IIdentityService>();
+        this._identityServiceMock = new Mock<IIdentityService>();
     }
 
     [Fact]
@@ -29,10 +29,10 @@ public class AuthorizationControllerTests
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
         
-        this._serviceMock.Setup(x => x.GetIdentity(It.IsAny<string>()))
+        this._identityServiceMock.Setup(x => x.GetIdentity(It.IsAny<string>()))
             .Returns(Task.FromResult(GetEntityResult<ClaimsIdentity>.FromFound(claimsIdentity)));
 
-        var controller = new AuthorizationController(this._serviceMock.Object);
+        var controller = new AuthorizationController(this._identityServiceMock.Object);
 
         var result = await controller.TokenAsync("someEmail");
         
@@ -51,10 +51,10 @@ public class AuthorizationControllerTests
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
         
-        this._serviceMock.Setup(x => x.RegIdentity(It.IsAny<string>(), It.IsAny<string>()))
+        this._identityServiceMock.Setup(x => x.RegIdentity(It.IsAny<string>(), It.IsAny<string>()))
             .Returns(Task.FromResult(GetEntityResult<ClaimsIdentity>.FromFound(claimsIdentity)));
 
-        var controller = new AuthorizationController(this._serviceMock.Object);
+        var controller = new AuthorizationController(this._identityServiceMock.Object);
 
         var result = await controller.RegistrationAsync("someEmail", "someLoginName");
         
