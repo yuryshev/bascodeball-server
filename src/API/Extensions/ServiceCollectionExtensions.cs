@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using API.Interfaces;
 using API.Services;
+using API.Stores;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
@@ -18,6 +19,7 @@ public class ServiceCollectionExtensions
     {
         _collection.AddScoped<IIdentityService, GetIdentityService>();
         _collection.AddScoped<IUserService, UserService>();
+        _collection.AddScoped<UserStore>();
     }
 
     public void AddPgDbContext(string connectionString)
