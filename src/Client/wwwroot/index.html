@@ -1,10 +1,60 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <h1>Hello</h1>
-</body>
-</html>
+﻿<h1>Index</h1>
+<button style="display: none" id="btn-signin">Sign In</button>
+<button style="display: none" id="btn-signout">Sign Out</button>
+
+
+<script>
+    let href = window.location.href;
+    let url = new URL(href);
+
+    let email = url.searchParams.get("email");
+    let token = url.searchParams.get("token");
+
+    if (email != null) {
+        window.localStorage.setItem('email', email)
+    }
+
+    if (token != null) {
+        window.localStorage.setItem('access_token', token)
+    }
+
+    if (window.localStorage.getItem('access_token') == null) {
+        document.getElementById('btn-signin').style = 'display: block'
+        document.getElementById('btn-signout').style = 'display: none'
+
+    }
+    else {
+        document.getElementById('btn-signin').style = 'display: none'
+        document.getElementById('btn-signout').style = 'display: block'
+
+        if (window.localStorage.getItem('nickname') == null) {
+            fetch('https://localhost:5001/getuser', {
+                method: 'GET',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then((response) => {
+                    return response.json()
+                }).then((data) => {
+                    console.log(data)
+                });
+        }
+    }
+
+
+    document.getElementById('btn-signin').addEventListener('click', () => {
+        window.location.replace("https://localhost:7284/api/google/authorization/code")
+    })
+
+    document.getElementById('btn-signout').addEventListener('click', () => {
+        window.localStorage.removeItem('access_token')
+        window.localStorage.removeItem('email')
+        document.getElementById('btn-signin').style = 'display: block'
+        document.getElementById('btn-signout').style = 'display: none'
+    })
+
+
+</script>
