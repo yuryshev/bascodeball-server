@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace API.Models.DbModels;
+﻿namespace API.Models.DbModels;
 public class User
 {
     public Guid UserId { get; set; }
@@ -12,5 +10,4 @@ public class User
     public string Role { get; set; }
     
     public int Rating { get; set; }
-    
 }
