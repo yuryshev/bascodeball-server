@@ -27,12 +27,14 @@
         document.getElementById('btn-signin').style = 'display: none'
         document.getElementById('btn-signout').style = 'display: block'
 
+        token = window.localStorage.getItem("access_token");
+
+        console.log(token)
+
         if (window.localStorage.getItem('nickname') == null) {
             fetch('https://localhost:5001/getuser', {
                 method: 'GET',
-                mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token
                 }
             })
@@ -40,6 +42,7 @@
                     return response.json()
                 }).then((data) => {
                     console.log(data)
+                    window.localStorage.setItem('nickname', data.loginName)
                 });
         }
     }
