@@ -1,0 +1,26 @@
+﻿<input type="text" id="nickname"/>
+<button id="nickname-btn">signin</button>
+
+<script>
+    document.getElementById('nickname-btn').addEventListener('click', () => {
+        href = window.location.href;
+        let url = new URL(href);
+        let email = url.searchParams.get("email");
+        let nickname = document.getElementById('nickname').value
+        console.log(JSON.stringify({ email: email, loginName: nickname }))
+
+        console.log(email, nickname);
+
+        fetch(`https://localhost:5001/reg?email=${email}&loginName=${nickname}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "email": email, "loginName": nickname })
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+                console.log(data);
+         });
+    })
+</script>
