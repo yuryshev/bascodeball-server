@@ -11,12 +11,10 @@ namespace API.Tests.Controllers;
 public class AuthorizationControllerTests
 {
     private readonly Mock<IIdentityService> _identityServiceMock;
-    private readonly Mock<IUserService> _userServiceMock;
 
     public AuthorizationControllerTests()
     {
         this._identityServiceMock = new Mock<IIdentityService>();
-        this._userServiceMock = new Mock<IUserService>();
     }
 
     [Fact]
