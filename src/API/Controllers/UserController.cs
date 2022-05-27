@@ -19,9 +19,9 @@ public class UserController : Controller
     
     [Authorize]
     [HttpGet("/getuser")]
-    public async Task<IActionResult> GetUserAsync(string email)
+    public async Task<IActionResult> GetUserAsync()
     {
-        var userResult = await _userService.GetUserByEmailAsync(email);
+        var userResult = await _userService.GetUserByEmailAsync(User.Identity.Name);
         if (!userResult.IsSuccess)
         {
             if (userResult.Status == GetEntityResult<User>.ResultType.NotFound)

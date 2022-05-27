@@ -3,7 +3,7 @@
 
 <script>
     document.getElementById('nickname-btn').addEventListener('click', () => {
-        href = window.location.href;
+        let href = window.location.href;
         let url = new URL(href);
         let email = url.searchParams.get("email");
         let nickname = document.getElementById('nickname').value
@@ -20,7 +20,7 @@
         }).then((response) => {
             return response.json();
         }).then((data) => {
-                console.log(data);
-         });
+            window.location.replace(`https://localhost:7038?token=${data.access_token}&email=${data.email}`)
+        });
     })
 </script>
