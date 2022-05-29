@@ -16,6 +16,7 @@ serviceCollectionExtensions.AddPgDbContext(pgConnectionString);
 serviceCollectionExtensions.AddApiServices(builder.Configuration);
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 
 var healthRoot = new HealthBuilder()
     .OutputHealth.Using<HealthOutputJsonFormatter>()

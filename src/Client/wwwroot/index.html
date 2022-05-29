@@ -1,63 +1,189 @@
-﻿<h1>Index</h1>
-<button style="display: none" id="btn-signin">Sign In</button>
-<button style="display: none" id="btn-signout">Sign Out</button>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basecodeball</title>
+    <link rel="icon" href="img/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="lib/signalr/dist/browser/signalr.min.js"></script>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar{
+            margin: 0 50px;
+        }
+        #list-clients {
+            width: 500px;
+            position: absolute;
+            left: 50%;
+            top:20%;
+            transform: translate(-50%, 0);
+        }
+        #list-clients img{
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-wrapper">
+        <nav class="navbar navbar-light">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                BASECODEBALL
+            </a>
+            <button class="btn btn-primary" style="display: none" id="btn-signin">Sign In</button>
+            <button class="btn btn-primary" style="display: none" id="btn-signout">Sign Out</button>
+        </nav>
+    </div>
+
+    <ul id="list-clients" class="list-group" style="display: none">
+        <li id="list-client-1" class="list-group-item" style="display: none">
+            <img src="img/zombie.png"/>
+            <span id="list-client-1-text"></span>
+        </li>
+
+        <li id="list-client-2" class="list-group-item" style="display: none">
+            <img src="img/witch.png" />
+            <span id="list-client-2-text"></span>
+        </li>
+
+        <li id="list-client-3" class="list-group-item" style="display: none">
+            <img src="img/happy.png" />
+            <span id="list-client-3-text"></span>
+        </li>
+
+        <li id="list-client-4" class="list-group-item" style="display: none">
+            <img src="img/dragon.png"/>
+            <span id="list-client-4-text"></span>
+        </li>
+    </ul>
 
 
-<script>
-    let href = window.location.href;
-    let url = new URL(href);
+    <button class="btn btn-primary" id="btn-send">Play</button>
 
-    let email = url.searchParams.get("email");
-    let token = url.searchParams.get("token");
+    <script>
+        let hubConnection
 
-    if (email != null) {
-        window.localStorage.setItem('email', email)
-    }
+        let href = window.location.href;
+        let url = new URL(href);
 
-    if (token != null) {
-        window.localStorage.setItem('access_token', token)
-    }
+        let token = url.searchParams.get("token");
 
-    if (window.localStorage.getItem('access_token') == null) {
-        document.getElementById('btn-signin').style = 'display: block'
-        document.getElementById('btn-signout').style = 'display: none'
+        if (token != null && token != getWithExpiry("access_token")) {
+            setWithExpiry('access_token', token, 600000)
+            window.location.replace("https://localhost:7038")
+        }
 
-    }
-    else {
-        document.getElementById('btn-signin').style = 'display: none'
-        document.getElementById('btn-signout').style = 'display: block'
+        let aceess_token = getWithExpiry("access_token")
 
-        token = window.localStorage.getItem("access_token");
+        if (aceess_token == null) {
+            document.getElementById('btn-signin').style = 'display: block'
+            document.getElementById('btn-signout').style = 'display: none'
 
-        console.log(token)
+        }
+        else {
+            document.getElementById('btn-signin').style = 'display: none'
+            document.getElementById('btn-signout').style = 'display: block'
 
-        if (window.localStorage.getItem('nickname') == null) {
-            fetch('https://localhost:5001/getuser', {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
+
+            if (getWithExpiry('user') == null) {
+                fetch('https://localhost:5001/getuser', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + aceess_token
+                    }
+                })
+                    .then((response) => {
+                        return response.json()
+                    }).then((data) => {
+                        setWithExpiry('user', JSON.stringify(data), 600000)
+                    });
+            }
+
+            hubConnection =
+                new signalR.HubConnectionBuilder()
+                    .withUrl("/chat", { accessTokenFactory: () => aceess_token })
+                    .build();
+
+            hubConnection.on("Receive", function (group) {
+                console.log(group)
+                document.getElementById('list-clients').style = 'display: block'
+                if (group.teams[0].users[0] != undefined) {
+                    document.getElementById('list-client-1').style = 'display: block'
+                    document.getElementById('list-client-1-text').innerText = group.teams[0].users[0].loginName
+                }
+                if (group.teams[0].users[1] != undefined) {
+                    document.getElementById('list-client-2').style = 'display: block'
+                    document.getElementById('list-client-2-text').innerText = group.teams[0].users[1].loginName
+                }
+                if (group.teams[1].users[0] != undefined) {
+                    document.getElementById('list-client-3').style = 'display: block'
+                    document.getElementById('list-client-3-text').innerText = group.teams[1].users[0].loginName
+                }
+                if (group.teams[1].users[1] != undefined) {
+                    document.getElementById('list-client-4').style = 'display: block'
+                    document.getElementById('list-client-4-text').innerText = group.teams[1].users[1].loginName
                 }
             })
-                .then((response) => {
-                    return response.json()
-                }).then((data) => {
-                    console.log(data)
-                    window.localStorage.setItem('nickname', data.loginName)
-                });
+
+            document.getElementById('btn-send').addEventListener('click', () => {
+                hubConnection.invoke("Join", getWithExpiry('user'));
+            })
+
+            hubConnection.start()
         }
-    }
 
 
-    document.getElementById('btn-signin').addEventListener('click', () => {
-        window.location.replace("https://localhost:7284/api/google/authorization/code")
-    })
+        document.getElementById('btn-signin').addEventListener('click', () => {
+            window.location.replace("https://localhost:7284/api/google/authorization/code")
+        })
 
-    document.getElementById('btn-signout').addEventListener('click', () => {
-        window.localStorage.removeItem('access_token')
-        window.localStorage.removeItem('email')
-        document.getElementById('btn-signin').style = 'display: block'
-        document.getElementById('btn-signout').style = 'display: none'
-    })
+        document.getElementById('btn-signout').addEventListener('click', () => {
+            window.localStorage.removeItem('access_token')
+            window.localStorage.removeItem('user')
+            document.getElementById('btn-signin').style = 'display: block'
+            document.getElementById('btn-signout').style = 'display: none'
+        })
+
+        function setWithExpiry(key, value, ttl) {
+            const now = new Date()
+
+            // `item` is an object which contains the original value
+            // as well as the time when it's supposed to expire
+            const item = {
+                value: value,
+                expiry: now.getTime() + ttl,
+            }
+            window.localStorage.setItem(key, JSON.stringify(item))
+        }
+
+        function getWithExpiry(key) {
+            const itemStr = window.localStorage.getItem(key)
+            // if the item doesn't exist, return null
+            if (!itemStr) {
+                return null
+            }
+            const item = JSON.parse(itemStr)
+            const now = new Date()
+            // compare the expiry time of the item with the current time
+            if (now.getTime() > item.expiry) {
+                // If the item is expired, delete the item from storage
+                // and return null
+                window.localStorage.removeItem(key)
+                return null
+            }
+            return item.value
+        }
 
 
-</script>
+    </script>
+</body>
+</html>
