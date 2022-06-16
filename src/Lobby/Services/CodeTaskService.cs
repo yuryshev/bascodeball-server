@@ -47,21 +47,21 @@ namespace Lobby.Services
                     {
                         Id = Guid.NewGuid().ToString(),
                         ExpectedResult = "0",
-                        InputData = "addNumbers(5, 5)"
+                        InputData = "divisionNumbers(5, 5)"
 
                     },
                     new CodeTaskTest
                     {
                         Id = Guid.NewGuid().ToString(),
                         ExpectedResult = "5",
-                        InputData = "addNumbers(10, 5)"
+                        InputData = "divisionNumbers(10, 5)"
 
                     },
                     new CodeTaskTest
                     {
                         Id = Guid.NewGuid().ToString(),
                         ExpectedResult = "10",
-                        InputData = "addNumbers(5, -5)"
+                        InputData = "divisionNumbers(5, -5)"
 
                     }
                 }

@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSignalR();
 builder.Services.AddCors();
+builder.Services.AddHttpClient();
 builder.Services.AddSingleton<GroupService>();
 builder.Services.AddSingleton<CodeTaskService>();
 
