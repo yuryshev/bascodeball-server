@@ -7,5 +7,5 @@ public interface IIdentityService
 {
     public Task<GetEntityResult<ClaimsIdentity>> GetIdentity(string inputEmail);
     
-    public Task<GetEntityResult<ClaimsIdentity>> RegIdentity(string inputEmail, string inputLoginName);
+    public Task<GetEntityResult<ClaimsIdentity>> RegIdentity(string inputEmail, string inputLoginName, string picture);
 }

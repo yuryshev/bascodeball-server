@@ -51,12 +51,12 @@ public class AuthorizationControllerTests
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
         
-        this._identityServiceMock.Setup(x => x.RegIdentity(It.IsAny<string>(), It.IsAny<string>()))
+        this._identityServiceMock.Setup(x => x.RegIdentity(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
             .Returns(Task.FromResult(GetEntityResult<ClaimsIdentity>.FromFound(claimsIdentity)));
 
         var controller = new AuthorizationController(this._identityServiceMock.Object);
 
-        var result = await controller.RegistrationAsync("someEmail", "someLoginName");
+        var result = await controller.RegistrationAsync("someEmail", "someLoginName", "picture.png");
         
         Assert.IsType<JsonResult>(result);
     }

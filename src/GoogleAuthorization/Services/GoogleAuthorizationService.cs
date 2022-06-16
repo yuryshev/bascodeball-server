@@ -39,7 +39,7 @@ namespace GoogleAuthorization.Services
             return url;
         }
 
-        public async Task<string> GetAuthorizationToken(string code)
+        public async Task<AccessTokenPayloadDto> GetAuthorizationToken(string code)
         {
             var bodyParams = new Dictionary<string, string>
             {
@@ -71,18 +71,17 @@ namespace GoogleAuthorization.Services
 
             var accessTokenPayload = JsonSerializer.Deserialize<AccessTokenPayloadDto>(payloadJson);
 
-            string email = accessTokenPayload!.Email;
 
-            return email;
+            return accessTokenPayload!;
         }
 
-        public async Task<string> ProvideJWTUrl(string email)
+        public async Task<string> ProvideJWTUrl(AccessTokenPayloadDto accessTokenPayload)
         {
             var httpClient = _httpClientFactory.CreateClient();
 
             var queryParams = new Dictionary<string, string>
             {
-                {"email", email },
+                { "email", accessTokenPayload.Email }
             };
 
             var url = QueryHelpers.AddQueryString("https://localhost:5001/token", queryParams!);
@@ -101,12 +100,11 @@ namespace GoogleAuthorization.Services
 
             if (getJwtErrorDto.ErrorText == "Invalid email.")
             {
-                Console.WriteLine($"https://localhost:7038/registration?email={email}");
-                return $"https://localhost:7038/registration?email={email}";
+                return $"http://localhost:3000/registration?email={accessTokenPayload!.Email}&picture={accessTokenPayload!.Picture}";
             }
             else
             {
-                return $"https://localhost:7038?token={getJwtDto!.Token}&email={getJwtDto!.Email}";
+                return $"http://localhost:3000?access_token={getJwtDto!.Token}";
             }
         } 
     }
