@@ -39,6 +39,7 @@ public class PgDbContext : DbContext
             entity.HasKey(e => e.UserId);
             entity.Property(e => e.Email).HasMaxLength(128).IsRequired();
             entity.Property(e => e.LoginName).HasMaxLength(32).IsRequired();
+            entity.Property(e => e.Picture).IsRequired();
             entity.Property(e => e.Rating).IsRequired();
         });
         

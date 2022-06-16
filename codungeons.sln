@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CF9F14B9-090
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C5DFCD66-780B-441E-9525-DD18FA354B66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "src\Client\Client.csproj", "{BE4DB30E-E2FC-4648-B75E-8A42A7A6DC51}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "src\API\API.csproj", "{002D5449-7C8D-4F70-89AA-C9679D01A610}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Tests", "test\API.Tests\API.Tests.csproj", "{08634ABF-D0AB-41BE-8D1E-6BCD77EB8656}"
@@ -17,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "src\Common\Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleAuthorization", "src\GoogleAuthorization\GoogleAuthorization.csproj", "{0B156B63-2B93-4312-9269-56A031628E52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lobby", "src\Lobby\Lobby.csproj", "{DEF05E00-BB8D-4B99-8362-6FC6830344C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lobby", "src\Lobby\Lobby.csproj", "{DEF05E00-BB8D-4B99-8362-6FC6830344C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BE4DB30E-E2FC-4648-B75E-8A42A7A6DC51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE4DB30E-E2FC-4648-B75E-8A42A7A6DC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE4DB30E-E2FC-4648-B75E-8A42A7A6DC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE4DB30E-E2FC-4648-B75E-8A42A7A6DC51}.Release|Any CPU.Build.0 = Release|Any CPU
 		{002D5449-7C8D-4F70-89AA-C9679D01A610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{002D5449-7C8D-4F70-89AA-C9679D01A610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{002D5449-7C8D-4F70-89AA-C9679D01A610}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,7 +48,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BE4DB30E-E2FC-4648-B75E-8A42A7A6DC51} = {CF9F14B9-0905-4D8B-BBB8-487047B8D2FB}
 		{002D5449-7C8D-4F70-89AA-C9679D01A610} = {CF9F14B9-0905-4D8B-BBB8-487047B8D2FB}
 		{08634ABF-D0AB-41BE-8D1E-6BCD77EB8656} = {C5DFCD66-780B-441E-9525-DD18FA354B66}
 		{BCD3E3A1-9DB3-4E05-9EDE-A5143A40ADB8} = {CF9F14B9-0905-4D8B-BBB8-487047B8D2FB}
