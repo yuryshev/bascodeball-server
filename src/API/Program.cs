@@ -16,6 +16,7 @@ serviceCollectionExtensions.AddPgDbContext(pgConnectionString);
 serviceCollectionExtensions.AddApiServices(builder.Configuration);
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 
 var healthRoot = new HealthBuilder()
     .OutputHealth.Using<HealthOutputJsonFormatter>()
@@ -41,10 +42,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = AuthOptions.ISSUER,
             // будет ли валидироваться потребитель токена
             ValidateAudience = true,
+            ValidateLifetime = true,
             // установка потребителя токена
             ValidAudience = AuthOptions.AUDIENCE,
-            // будет ли валидироваться время существования
-            ValidateLifetime = true,
             // установка ключа безопасности
             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
             // валидация ключа безопасности
@@ -56,7 +56,16 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin();
+    builder.AllowAnyHeader();
+    builder.AllowAnyMethod();
+});
 
 app.MapControllers();
 

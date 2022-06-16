@@ -41,6 +41,7 @@ public class UserStoreTests
         {
             Email = "test_email1",
             LoginName = "test_login1",
+            Picture = "picture1.png",
             Role = "user",
         };
         
@@ -48,6 +49,7 @@ public class UserStoreTests
         {
             Email = "test_email2",
             LoginName = "test_login2",
+            Picture = "picture2.png",
             Role = "user",
         };
 
@@ -71,6 +73,7 @@ public class UserStoreTests
         {
             Email = "test_email1",
             LoginName = "test_login1",
+            Picture = "picture1.png",
             Role = "user",
         };
         
@@ -78,6 +81,7 @@ public class UserStoreTests
         {
             Email = "test_email2",
             LoginName = "test_login2",
+            Picture = "picture2.png",
             Role = "user",
         };
 
@@ -85,7 +89,7 @@ public class UserStoreTests
         await this._dbContext.SaveChangesAsync();
 
         // Act
-        var result = await this._store.AddUserAsync(user2.Email, user2.LoginName);
+        var result = await this._store.AddUserAsync(user2.Email, user2.LoginName, user2.Picture);
 
         // Assert
         Assert.True(result.IsSuccess);

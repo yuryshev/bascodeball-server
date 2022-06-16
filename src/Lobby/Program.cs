@@ -1,29 +1,32 @@
+using Lobby.Hubs;
+using Lobby.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddSignalR();
 builder.Services.AddCors();
+builder.Services.AddSingleton<GroupService>();
+builder.Services.AddSingleton<CodeTaskService>();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseRouting();
 
 app.UseCors(builder =>
 {
-    builder.WithOrigins("https://localhost:7104")
+    builder.WithOrigins("http://localhost:3000")
     .AllowAnyHeader()
-    .WithMethods("GET", "POST")
+    .AllowAnyMethod()
     .AllowCredentials();
 });
 
-/*
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapHub<EditorHub>("/editor");
+    endpoints.MapHub<LobbyHub>("/lobby");
 });
-*/
+
 
 app.Run();

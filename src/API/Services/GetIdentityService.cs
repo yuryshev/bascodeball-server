@@ -50,11 +50,11 @@ public class GetIdentityService : IIdentityService
         }
     }
     
-    public async Task<GetEntityResult<ClaimsIdentity>> RegIdentity(string email, string loginName)
+    public async Task<GetEntityResult<ClaimsIdentity>> RegIdentity(string email, string loginName, string picture)
     {
         try
         {
-            var userResult = await this._store.AddUserAsync(email, loginName);
+            var userResult = await this._store.AddUserAsync(email, loginName, picture);
             if (!userResult.IsSuccess)
             {
                 return GetEntityResult<ClaimsIdentity>.FromDbError();
