@@ -68,4 +68,21 @@ public class UserStore
             return GetEntityResult<User>.FromDbError();
         }
     }
+    
+    public async Task<GetEntityResult<User>> UpdateUserRatingAsync(string email, int rating)
+    {
+        try
+        {
+            var dbUser = await this._dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            dbUser.Rating = rating;
+            
+            this._dbContext.Users.Update(dbUser);
+            await this._dbContext.SaveChangesAsync();
+            return GetEntityResult<User>.FromFound(dbUser);
+        }
+        catch
+        {
+            return GetEntityResult<User>.FromDbError();
+        }
+    }
 }
