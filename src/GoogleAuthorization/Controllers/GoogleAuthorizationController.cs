@@ -1,4 +1,5 @@
-﻿using GoogleAuthorization.Services;
+﻿using GoogleAuthorization.Dtos;
+using GoogleAuthorization.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoogleAuthorization.Controllers
@@ -25,8 +26,8 @@ namespace GoogleAuthorization.Controllers
         [HttpGet("token")]
         public async Task GetAuthorizationToken(string code)
         {
-            string email = await _googleAuthorizationService.GetAuthorizationToken(code);
-            string url = await _googleAuthorizationService.ProvideJWTUrl(email);
+            AccessTokenPayloadDto dto = await _googleAuthorizationService.GetAuthorizationToken(code);
+            string url = await _googleAuthorizationService.ProvideJWTUrl(dto);
             HttpContext.Response.Redirect(url);
         }
 

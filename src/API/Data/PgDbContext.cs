@@ -8,6 +8,7 @@ public class PgDbContext : DbContext
     public PgDbContext(DbContextOptions<PgDbContext> options)
         : base(options)
     {
+        Database.EnsureCreated();
     }
 
     /// <summary>

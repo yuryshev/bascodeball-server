@@ -47,7 +47,7 @@ public class UserStore
         }
     }
     
-    public async Task<GetEntityResult<User>> AddUserAsync(string email, string loginName)
+    public async Task<GetEntityResult<User>> AddUserAsync(string email, string loginName, string picture)
     {
         try
         {
@@ -55,6 +55,7 @@ public class UserStore
             {
                 Email = email,
                 LoginName = loginName,
+                Picture = picture,
                 Role = "user",
             };
 
