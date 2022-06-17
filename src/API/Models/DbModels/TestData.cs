@@ -2,7 +2,7 @@
 
 public class TestData
 {
-    public Guid TestDataId { get; set; }
+    public Guid Id { get; set; }
     
     public string InputData { get; set; }
     

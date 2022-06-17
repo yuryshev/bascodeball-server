@@ -20,7 +20,9 @@ public class ServiceCollectionExtensions
     {
         _collection.AddScoped<IIdentityService, GetIdentityService>();
         _collection.AddScoped<IUserService, UserService>();
+        _collection.AddScoped<IExerciseService, ExerciseService>();
         _collection.AddScoped<UserStore>();
+        _collection.AddScoped<ExerciseStore>();
     }
 
     public void AddPgDbContext(string connectionString)

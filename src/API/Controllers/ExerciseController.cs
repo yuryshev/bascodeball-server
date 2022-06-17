@@ -16,9 +16,9 @@ public class ExerciseController : Controller
     }
     
     [HttpGet("/get_exercise")]
-    public async Task<IActionResult> GetExerciseAsync(ICollection<Team> inputTeams)
+    public async Task<IActionResult> GetExerciseAsync()
     {
-        var exerciseResult = await _exerciseService.GetExerciseAsync(inputTeams);
+        var exerciseResult = await _exerciseService.GetExerciseAsync();
         if (!exerciseResult.IsSuccess)
         {
             if (exerciseResult.Status == GetEntityResult<Exercise>.ResultType.NotFound)

@@ -36,8 +36,8 @@ public class TestDataStore
         try
         {
             var testData = await this._dbContext.Exercises
-                .Where(e => e.ExerciseId == exerciseId)
-                .Select(e => e.TestingData)
+                .Where(e => e.Id == exerciseId)
+                .Select(e => e.Tests)
                 .FirstOrDefaultAsync();
             if (testData == null || testData.Count == 0)
             {

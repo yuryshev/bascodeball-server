@@ -36,7 +36,7 @@ namespace Lobby.Hubs
 
             if (_groups.IsFull(group.Id) && group.Task == null)
             {
-                var task = _tasks.GetRandomTask();
+                var task = await _tasks.GetRandomTask();
                 group.Task = task;
             }
 

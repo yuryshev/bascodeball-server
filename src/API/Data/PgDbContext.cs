@@ -25,11 +25,6 @@ public class PgDbContext : DbContext
     /// Gets or sets the test data.
     /// </summary>
     public virtual DbSet<TestData> TestData { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the test data.
-    /// </summary>
-    public virtual DbSet<Team> Teams { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,30 +37,22 @@ public class PgDbContext : DbContext
             entity.Property(e => e.Picture).IsRequired();
             entity.Property(e => e.Rating).IsRequired();
         });
-        
+
         modelBuilder.Entity<Exercise>(entity =>
         {
             entity.ToTable("Exercise");
-            entity.HasKey(e => e.ExerciseId);
+            entity.HasKey(e => e.Id);
             entity.Property(e => e.Description).HasMaxLength(2000).IsRequired();
-            entity.Property(e => e.FunctionName).HasMaxLength(32).IsRequired();
-            entity.HasMany(e => e.TestingData).WithOne();
+            entity.Property(e => e.Title).HasMaxLength(32).IsRequired();
+            entity.HasMany(e => e.Tests).WithOne();
         });
-        
+
         modelBuilder.Entity<TestData>(entity =>
         {
             entity.ToTable("TestData");
-            entity.HasKey(e => e.TestDataId);
+            entity.HasKey(e => e.Id);
             entity.Property(e => e.InputData).HasMaxLength(128).IsRequired();
             entity.Property(e => e.ExpectedResult).HasMaxLength(128).IsRequired();
-        });
-        
-        modelBuilder.Entity<Team>(entity =>
-        {
-            entity.ToTable("Teams");
-            entity.HasKey(e => e.TeamId);
-            entity.HasMany(e => e.SolvedExercises).WithOne();
-            entity.HasMany(e => e.Players).WithOne();
         });
     }
 }

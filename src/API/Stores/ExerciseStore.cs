@@ -18,7 +18,9 @@ public class ExerciseStore
     {
         try
         {
-            var exercises = await this._dbContext.Exercises.ToListAsync();
+            var exercises = await this._dbContext.Exercises
+                .Include(e => e.Tests)
+                .ToListAsync();
             if (exercises == null || exercises.Count == 0)
             {
                 return GetEntityResult<List<Exercise>>.FromNotFound();
@@ -38,7 +40,7 @@ public class ExerciseStore
             var exercise = new Exercise
             {
                 Description = description,
-                FunctionName = functionName,
+                Title = functionName,
             };
 
             await this._dbContext.Exercises.AddAsync(exercise);

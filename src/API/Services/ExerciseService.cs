@@ -14,7 +14,7 @@ public class ExerciseService : IExerciseService
         this._store = store ?? throw new ArgumentNullException(nameof(store));
     }
     
-    public async Task<GetEntityResult<Exercise>> GetExerciseAsync(ICollection<Team> teams)
+    public async Task<GetEntityResult<Exercise>> GetExerciseAsync()
     {
         var exercisesResult = await this._store.GetExercisesAsync();
         if (!exercisesResult.IsSuccess)
@@ -28,13 +28,7 @@ public class ExerciseService : IExerciseService
         }
 
         var exerciseList = exercisesResult.Entity;
-        var solvedExercises = teams.SelectMany(t => t.SolvedExercises);
-
-        var exercise = exerciseList.FirstOrDefault(ex => !solvedExercises.Contains(ex));
-        if (exercise == null)
-        {
-            return GetEntityResult<Exercise>.FromNotFound();
-        }
+        var exercise = exerciseList.ElementAt(new Random().Next(exerciseList.Count));
         
         return GetEntityResult<Exercise>.FromFound(exercise);
     }

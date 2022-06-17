@@ -2,11 +2,10 @@
 
 public class Exercise
 {
-    public Guid ExerciseId { get; set; }
+    public Guid Id { get; set; }
     
+    public string Title { get; set; }
     public string Description { get; set; }
     
-    public string FunctionName { get; set; }
-    
-    public ICollection<TestData> TestingData { get; set; }
+    public ICollection<TestData> Tests { get; set; }
 }
