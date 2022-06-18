@@ -1,9 +1,11 @@
-﻿namespace API.Models.DbModels;
+﻿namespace Common.DbModels;
 public class User
 {
     public Guid UserId { get; set; }
     
-    public string LoginName { get; set; }
+    public string ConnectionId { get; set; }
+    
+    public string NickName { get; set; }
 
     public string Picture { get; set; }
     

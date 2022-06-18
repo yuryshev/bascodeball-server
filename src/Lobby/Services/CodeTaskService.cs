@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using Common.DbModels;
 using Lobby.Models;
 
 namespace Lobby.Services
@@ -12,10 +13,10 @@ namespace Lobby.Services
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
-        public async Task<CodeTask> GetRandomTask()
+        public async Task<Exercise> GetRandomTask()
         {
-            var taskHttpResponseMessage = await this._factory.CreateClient().GetAsync("https://localhost:5001/get_exercise");
-            var task = await taskHttpResponseMessage.Content.ReadFromJsonAsync<CodeTask>();
+            var taskHttpResponseMessage = await this._factory.CreateClient().GetAsync("https://localhost:5001/getExercise");
+            var task = await taskHttpResponseMessage.Content.ReadFromJsonAsync<Exercise>();
 
             return task;
         }

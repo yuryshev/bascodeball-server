@@ -1,4 +1,4 @@
-﻿namespace Lobby.DTOModels;
+﻿namespace Common.DTOModels;
 
 public class UserDTO
 {

@@ -1,4 +1,4 @@
-﻿using API.Models.DbModels;
+﻿using Common.DbModels;
 using Common.OperatingModels;
 
 namespace API.Interfaces;

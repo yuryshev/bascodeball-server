@@ -1,4 +1,4 @@
-﻿namespace API.Models.DbModels;
+﻿namespace Common.DbModels;
 
 public class TestData
 {

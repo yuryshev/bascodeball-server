@@ -1,4 +1,4 @@
-﻿using API.Models.DbModels;
+﻿using Common.DbModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -33,9 +33,10 @@ public class PgDbContext : DbContext
             entity.ToTable("User");
             entity.HasKey(e => e.UserId);
             entity.Property(e => e.Email).HasMaxLength(128).IsRequired();
-            entity.Property(e => e.LoginName).HasMaxLength(32).IsRequired();
+            entity.Property(e => e.NickName).HasMaxLength(32).IsRequired();
             entity.Property(e => e.Picture).IsRequired();
             entity.Property(e => e.Rating).IsRequired();
+            entity.Property(e => e.ConnectionId).IsRequired();
         });
 
         modelBuilder.Entity<Exercise>(entity =>

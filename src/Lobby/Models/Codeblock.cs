@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Lobby.Models
+﻿namespace Lobby.Models
 {
     public class Codeblock
     {

@@ -1,6 +1,6 @@
 ﻿using API.Interfaces;
-using API.Models.DbModels;
-using API.Models.DTOModels;
+using Common.DbModels;
+using Common.DTOModels;
 using Common.OperatingModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ public class UserController : Controller
     }
     
     [Authorize]
-    [HttpGet("/getuser")]
+    [HttpGet("/getUser")]
     public async Task<IActionResult> GetUserAsync()
     {
         var userResult = await _userService.GetUserByEmailAsync(User.Identity.Name);

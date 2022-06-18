@@ -42,9 +42,9 @@ public class AuthorizationController : Controller
     }
     
     [HttpPost("/reg")]
-    public async Task<IActionResult> RegistrationAsync(string email, string loginName, string picture)
+    public async Task<IActionResult> RegistrationAsync(string email, string nickName, string picture)
     {
-        var identityResult = await _identityService.RegIdentity(email, loginName, picture);
+        var identityResult = await _identityService.RegIdentity(email, nickName, picture);
         if (!identityResult.IsSuccess)
         {
             if (identityResult.Status == GetEntityResult<ClaimsIdentity>.ResultType.UnexpectedError)

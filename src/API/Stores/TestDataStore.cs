@@ -1,5 +1,5 @@
 ﻿using API.Data;
-using API.Models.DbModels;
+using Common.DbModels;
 using Common.OperatingModels;
 using Microsoft.EntityFrameworkCore;
 

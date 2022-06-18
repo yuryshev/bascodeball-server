@@ -1,5 +1,5 @@
 ﻿using API.Data;
-using API.Models.DbModels;
+using Common.DbModels;
 using API.Stores;
 using Common.OperatingModels;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +40,7 @@ public class UserStoreTests
         var user1 = new User
         {
             Email = "test_email1",
-            LoginName = "test_login1",
+            NickName = "test_login1",
             Picture = "picture1.png",
             Role = "user",
         };
@@ -48,7 +48,7 @@ public class UserStoreTests
         var user2 = new User
         {
             Email = "test_email2",
-            LoginName = "test_login2",
+            NickName = "test_login2",
             Picture = "picture2.png",
             Role = "user",
         };
@@ -72,7 +72,7 @@ public class UserStoreTests
         var user1 = new User
         {
             Email = "test_email1",
-            LoginName = "test_login1",
+            NickName = "test_login1",
             Picture = "picture1.png",
             Role = "user",
         };
@@ -80,7 +80,7 @@ public class UserStoreTests
         var user2 = new User
         {
             Email = "test_email2",
-            LoginName = "test_login2",
+            NickName = "test_login2",
             Picture = "picture2.png",
             Role = "user",
         };
@@ -89,12 +89,12 @@ public class UserStoreTests
         await this._dbContext.SaveChangesAsync();
 
         // Act
-        var result = await this._store.AddUserAsync(user2.Email, user2.LoginName, user2.Picture);
+        var result = await this._store.AddUserAsync(user2.Email, user2.NickName, user2.Picture);
 
         // Assert
         Assert.True(result.IsSuccess);
         Assert.Equal(GetEntityResult<User>.ResultType.Found, result.Status);
         Assert.Equal(user2.Email, result.Entity.Email);
-        Assert.Equal(user2.LoginName, result.Entity.LoginName);
+        Assert.Equal(user2.NickName, result.Entity.NickName);
     }
 }

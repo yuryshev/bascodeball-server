@@ -1,11 +1,13 @@
-﻿namespace Lobby.Models
+﻿using Common.DbModels;
+
+namespace Lobby.Models
 {
     public class Group
     {
-        public string Id { get; set; } = null!;
+        public string Id { get; set; }
 
-        public List<Team> Teams { get; set; } = new List<Team> { };
+        public List<Team> Teams { get; set; } = new List<Team>();
 
-        public CodeTask? Task { get; set; }
+        public Exercise? Task { get; set; }
     }
 }

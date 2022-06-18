@@ -1,5 +1,5 @@
 ﻿using API.Interfaces;
-using API.Models.DbModels;
+using Common.DbModels;
 using Common.OperatingModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,7 @@ public class ExerciseController : Controller
         this._exerciseService = exerciseService ?? throw new ArgumentNullException(nameof(exerciseService));
     }
     
-    [HttpGet("/get_exercise")]
+    [HttpGet("/getExercise")]
     public async Task<IActionResult> GetExerciseAsync()
     {
         var exerciseResult = await _exerciseService.GetExerciseAsync();

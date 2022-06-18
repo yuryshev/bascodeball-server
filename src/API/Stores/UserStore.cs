@@ -1,5 +1,5 @@
 ﻿using API.Data;
-using API.Models.DbModels;
+using Common.DbModels;
 using Common.OperatingModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,9 +54,10 @@ public class UserStore
             var user = new User
             {
                 Email = email,
-                LoginName = loginName,
+                NickName = loginName,
                 Picture = picture,
                 Role = "user",
+                ConnectionId = String.Empty,
             };
 
             await this._dbContext.Users.AddAsync(user);

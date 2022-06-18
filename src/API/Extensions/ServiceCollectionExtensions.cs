@@ -1,6 +1,6 @@
 ﻿using API.Data;
 using API.Interfaces;
-using API.Models.DbModels;
+using Common.DbModels;
 using API.Services;
 using API.Stores;
 using Microsoft.EntityFrameworkCore;

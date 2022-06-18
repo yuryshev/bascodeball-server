@@ -1,4 +1,5 @@
-﻿using Lobby.DTOModels;
+﻿using Common.DTOModels;
+using Common.DbModels;
 using Lobby.Models;
 using Lobby.Services;
 using Microsoft.AspNetCore.SignalR;
@@ -11,6 +12,8 @@ namespace Lobby.Hubs
         private readonly CodeTaskService _tasks;
         private readonly IHttpClientFactory _httpClientFactory;
 
+        private const int VictoryPoints = 30;
+
         public LobbyHub(GroupService groups, CodeTaskService tasks, IHttpClientFactory httpClientFactory)
         {
             _groups = groups;
@@ -21,16 +24,16 @@ namespace Lobby.Hubs
         public override async Task OnConnectedAsync()
         {
             Console.WriteLine($"{DateTime.Now} - Client {Context.ConnectionId} connected.");
-            await Clients.Caller.SendAsync("ReciveConnectionId", Context.ConnectionId);
+            await Clients.Caller.SendAsync("ReceiveConnectionId", Context.ConnectionId);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            Console.WriteLine($"{DateTime.Now} - Client {Context.ConnectionId} disconected.");
+            Console.WriteLine($"{DateTime.Now} - Client {Context.ConnectionId} disconnected.");
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task Join(Player player)
+        public async Task Join(User player)
         {
             Group group = _groups.AddPlayer(player);
 
@@ -41,17 +44,17 @@ namespace Lobby.Hubs
             }
 
             await Groups.AddToGroupAsync(Context.ConnectionId, group.Id);
-            await Clients.Group(group.Id).SendAsync("ReciveGroup", group);
+            await Clients.Group(group.Id).SendAsync("ReceiveGroup", group);
         }
 
         public async Task Win(string groupId, string winTeamId)
         {
-            Group group = _groups.Groups!.FirstOrDefault(_ => _.Id == groupId)!;
-            Team team = group.Teams!.FirstOrDefault(_ => _.Id == winTeamId)!;
+            Group group = _groups.Groups!.FirstOrDefault(g => g.Id == groupId)!;
+            Team team = group.Teams!.FirstOrDefault(t => t.Id == winTeamId)!;
 
 
             var httpClient = _httpClientFactory.CreateClient();
-            var updatePLayerRatingCollection = new List<UserDTO>();
+            var updatePlayerRatingCollection = new List<UserDTO>();
 
             foreach (var teamItem in group.Teams)
             {
@@ -59,19 +62,19 @@ namespace Lobby.Hubs
                 {
                     if (teamItem.Id == winTeamId)
                     {
-                        updatePLayerRatingCollection.Add(new UserDTO { Email = playerItem.Email, Rating = playerItem.Rating + 30});
+                        updatePlayerRatingCollection.Add(new UserDTO { Email = playerItem.Email, Rating = playerItem.Rating + VictoryPoints});
                     }
                     else
                     {
-                        if (playerItem.Rating - 30 >= 0)
+                        if (playerItem.Rating - VictoryPoints >= 0)
                         {
-                            updatePLayerRatingCollection.Add(new UserDTO { Email = playerItem.Email, Rating = playerItem.Rating - 30 });
+                            updatePlayerRatingCollection.Add(new UserDTO { Email = playerItem.Email, Rating = playerItem.Rating - VictoryPoints });
                         }
                     }
                 }
             }
 
-            await httpClient.PostAsJsonAsync("https://localhost:5001/updateUserRating", updatePLayerRatingCollection);
+            await httpClient.PostAsJsonAsync("https://localhost:5001/updateUserRating", updatePlayerRatingCollection);
             await Clients.Group(group.Id).SendAsync("ReceiveWin", team.Id);
             _groups.Groups.Remove(group);
         }

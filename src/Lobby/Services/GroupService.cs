@@ -1,10 +1,11 @@
-﻿using Lobby.Models;
+﻿using Common.DbModels;
+using Lobby.Models;
 
 namespace Lobby.Services
 {
     public class GroupService
     {
-        public List<Group> Groups = new List<Group> { };
+        public List<Group> Groups = new List<Group>();
 
         public bool IsFull(string groupId)
         {
@@ -14,7 +15,7 @@ namespace Lobby.Services
 
             foreach(var itemTeam in group.Teams)
             {
-                foreach (var itemPlayer in itemTeam.Players)
+                foreach (var _ in itemTeam.Players)
                 {
                     counter++;
                 }
@@ -23,32 +24,30 @@ namespace Lobby.Services
             return counter == 4;
         }
 
-        public Group AddPlayer(Player? player)
+        public Group AddPlayer(User? inputPlayer)
         {
             // Reconect Player
-            foreach (var _group in Groups)
+            foreach (var group in Groups)
             {
-                foreach (var _team in _group.Teams)
+                foreach (var team in group.Teams)
                 {
-                    foreach (var _player in _team.Players)
+                    foreach (var player in team.Players)
                     {
-                        if (_player.Id == player.Id && _player.ConnectionId != player.ConnectionId)
+                        if (player.UserId == inputPlayer.UserId && player.ConnectionId != inputPlayer.ConnectionId)
                         {
-                            _player.ConnectionId = player.ConnectionId;
-                            return _group;
+                            player.ConnectionId = inputPlayer.ConnectionId;
+                            return group;
                         }
                     }
                 }
             }
-
-
 
             // Add new Player
             if (Groups.Count == 0)
             {
                 Groups.Add(new Group { Id = Guid.NewGuid().ToString() });
                 Groups[0].Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
-                Groups[0].Teams[0].Players.Add(player);
+                Groups[0].Teams[0].Players.Add(inputPlayer);
                 return Groups[0];
             }
 
@@ -58,7 +57,7 @@ namespace Lobby.Services
             {
                 Groups.Add(new Group { Id = Guid.NewGuid().ToString() });
                 Groups[Groups.Count - 1].Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
-                Groups[Groups.Count - 1].Teams[0].Players.Add(player);
+                Groups[Groups.Count - 1].Teams[0].Players.Add(inputPlayer);
                 return Groups[Groups.Count - 1];
             }
 
@@ -66,28 +65,25 @@ namespace Lobby.Services
             {
                 if (lastGroup.Teams[0].Players.Count < 2)
                 {
-                    lastGroup.Teams[0].Players.Add(player);
+                    lastGroup.Teams[0].Players.Add(inputPlayer);
                     return lastGroup;
                 }
-                else
-                {
-                    lastGroup.Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
-                    lastGroup.Teams[1].Players.Add(player);
-                    return lastGroup;
-                }
+
+                lastGroup.Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
+                lastGroup.Teams[1].Players.Add(inputPlayer);
+                return lastGroup;
             }
 
             if (lastGroup.Teams.Count == 2)
             {
                 if (lastGroup.Teams[1].Players.Count < 2)
                 {
-                    lastGroup.Teams[1].Players.Add(player);
+                    lastGroup.Teams[1].Players.Add(inputPlayer);
                     return lastGroup;
                 }
             }
 
             return null;
-
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using API.Interfaces;
-using API.Models.DbModels;
+using Common.DbModels;
 using API.Stores;
 using Common.OperatingModels;
 
