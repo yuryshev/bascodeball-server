@@ -7,21 +7,12 @@ namespace Lobby.Services
     {
         public List<Group> Groups = new List<Group>();
 
+        private const int TeamMembersCount = 2;
+        private const int GroupTeamsCount = 2;
+
         public bool IsFull(string groupId)
         {
-            var group = Groups.FirstOrDefault(_ => _.Id == groupId);
-
-            int counter = 0;
-
-            foreach(var itemTeam in group.Teams)
-            {
-                foreach (var _ in itemTeam.Players)
-                {
-                    counter++;
-                }
-            }
-
-            return counter == 4;
+           return Groups.FirstOrDefault(g => g.Id == groupId).Teams.TrueForAll(t => t.Players.Count == TeamMembersCount);
         }
 
         public Group AddPlayer(User? inputPlayer)
@@ -42,48 +33,19 @@ namespace Lobby.Services
                 }
             }
 
-            // Add new Player
-            if (Groups.Count == 0)
+            // Create Group
+            if (Groups.Count == 0 || (Groups.Last().Teams.Count == GroupTeamsCount && Groups.Last().Teams.Last().Players.Count == TeamMembersCount))
             {
                 Groups.Add(new Group { Id = Guid.NewGuid().ToString() });
                 Groups[0].Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
-                Groups[0].Teams[0].Players.Add(inputPlayer);
-                return Groups[0];
+                Groups[0].Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
             }
+            
+            //Add Player
+            var lastGroup = Groups.Last();
+            lastGroup.Teams.First(t => t.Players.Count != TeamMembersCount).Players.Add(inputPlayer);
 
-            var lastGroup = Groups[Groups.Count - 1];
-
-            if (lastGroup.Teams.Count == 2 && lastGroup.Teams[1].Players.Count == 2)
-            {
-                Groups.Add(new Group { Id = Guid.NewGuid().ToString() });
-                Groups[Groups.Count - 1].Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
-                Groups[Groups.Count - 1].Teams[0].Players.Add(inputPlayer);
-                return Groups[Groups.Count - 1];
-            }
-
-            if (lastGroup.Teams.Count == 1)
-            {
-                if (lastGroup.Teams[0].Players.Count < 2)
-                {
-                    lastGroup.Teams[0].Players.Add(inputPlayer);
-                    return lastGroup;
-                }
-
-                lastGroup.Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
-                lastGroup.Teams[1].Players.Add(inputPlayer);
-                return lastGroup;
-            }
-
-            if (lastGroup.Teams.Count == 2)
-            {
-                if (lastGroup.Teams[1].Players.Count < 2)
-                {
-                    lastGroup.Teams[1].Players.Add(inputPlayer);
-                    return lastGroup;
-                }
-            }
-
-            return null;
+            return lastGroup;
         }
     }
 }
