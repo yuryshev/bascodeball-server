@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using API.Controllers;
-using API.Interfaces;
+using BLL.Interfaces;
 using Common.OperatingModels;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

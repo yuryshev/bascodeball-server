@@ -1,4 +1,5 @@
-﻿using Common.DbModels;
+﻿using System.Linq;
+using Common.DbModels;
 using Lobby.Models;
 
 namespace Lobby.Services
@@ -36,13 +37,20 @@ namespace Lobby.Services
             // Create Group
             if (Groups.Count == 0 || (Groups.Last().Teams.Count == GroupTeamsCount && Groups.Last().Teams.Last().Players.Count == TeamMembersCount))
             {
-                Groups.Add(new Group { Id = Guid.NewGuid().ToString() });
-                Groups[0].Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
-                Groups[0].Teams.Add(new Team { Id = Guid.NewGuid().ToString() });
+                Groups.Add(
+                    new Group
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Teams = new List<Team>
+                        {
+                            new() { Id = Guid.NewGuid().ToString() },
+                            new() { Id = Guid.NewGuid().ToString() },
+                        }
+                    });
             }
             
             //Add Player
-            var lastGroup = Groups.Last();
+            var lastGroup = Groups.Last(g => g.Teams.Any(t => t.Players.Count != TeamMembersCount));
             lastGroup.Teams.First(t => t.Players.Count != TeamMembersCount).Players.Add(inputPlayer);
 
             return lastGroup;

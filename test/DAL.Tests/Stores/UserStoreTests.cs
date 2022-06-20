@@ -34,7 +34,7 @@ public class UserStoreTests
     }
     
     [Fact]
-    public async Task GetUsersAsync_CorrectUsersData_DbDataAdded()
+    public async Task GetUsersAsync_CorrectUsersData_DbDataReturned()
     {
         // Arrange
         var user1 = new User

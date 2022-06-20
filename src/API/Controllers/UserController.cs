@@ -40,11 +40,11 @@ public class UserController : Controller
     }
     
     [HttpPost("/updateUserRating")]
-    public async Task<IActionResult> UpdateUsersRating([FromBody] List<UserDTO> users)
+    public async Task<IActionResult> UpdateUsersRatingAsync([FromBody] List<UserDTO> users)
     {
         foreach (var inputUserDTO in users)
         {
-            var userResult = await _userService.UpdateUserRating(inputUserDTO.Email, inputUserDTO.Rating);
+            var userResult = await _userService.UpdateUserRatingAsync(inputUserDTO.Email, inputUserDTO.Rating);
             if (!userResult.IsSuccess)
             {
                 if (userResult.Status == GetEntityResult<User>.ResultType.NotFound)
@@ -62,9 +62,9 @@ public class UserController : Controller
     }
     
     [HttpGet("/getUserRating")]
-    public async Task<IActionResult> GetUsersRating()
+    public async Task<IActionResult> GetUsersRatingAsync()
     {
-        var userListResult = await _userService.GetUsersRating();
+        var userListResult = await _userService.GetUsersRatingAsync();
         if (!userListResult.IsSuccess)
         {
             if (userListResult.Status == GetEntityResult<List<User>>.ResultType.NotFound)

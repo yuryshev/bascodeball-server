@@ -1,10 +1,11 @@
 ﻿using DAL.Data;
 using Common.DbModels;
 using Common.OperatingModels;
+using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Stores;
-public class UserStore
+public class UserStore : IUserStore
 {
     private readonly PgDbContext _dbContext;
 

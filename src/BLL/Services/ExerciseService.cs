@@ -1,15 +1,15 @@
 ﻿using BLL.Interfaces;
 using Common.DbModels;
-using DAL.Stores;
 using Common.OperatingModels;
+using DAL.Interfaces;
 
 namespace BLL.Services;
 
 public class ExerciseService : IExerciseService
 {
-    private readonly ExerciseStore _store;
+    private readonly IExerciseStore _store;
 
-    public ExerciseService(ExerciseStore store)
+    public ExerciseService(IExerciseStore store)
     {
         this._store = store ?? throw new ArgumentNullException(nameof(store));
     }

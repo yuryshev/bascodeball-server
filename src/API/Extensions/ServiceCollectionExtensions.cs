@@ -1,9 +1,7 @@
 ﻿using DAL.Data;
 using BLL.Interfaces;
-using API.Interfaces;
-using Common.DbModels;
-using API.Services;
 using BLL.Services;
+using DAL.Interfaces;
 using DAL.Stores;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,8 +21,8 @@ public class ServiceCollectionExtensions
         _collection.AddScoped<IIdentityService, GetIdentityService>();
         _collection.AddScoped<IUserService, UserService>();
         _collection.AddScoped<IExerciseService, ExerciseService>();
-        _collection.AddScoped<UserStore>();
-        _collection.AddScoped<ExerciseStore>();
+        _collection.AddScoped<IUserStore, UserStore>();
+        _collection.AddScoped<IExerciseStore, ExerciseStore>();
     }
 
     public void AddPgDbContext(string connectionString)

@@ -1,15 +1,15 @@
 ﻿using BLL.Interfaces;
 using Common.DbModels;
 using Common.OperatingModels;
-using DAL.Stores;
+using DAL.Interfaces;
 
 namespace BLL.Services;
 
 public class UserService : IUserService
 {
-    private readonly UserStore _store;
+    private readonly IUserStore _store;
 
-    public UserService(UserStore store)
+    public UserService(IUserStore store)
     {
         this._store = store ?? throw new ArgumentNullException(nameof(store));
     }
@@ -31,7 +31,7 @@ public class UserService : IUserService
         return GetEntityResult<User>.FromFound(user);
     }
     
-    public async Task<GetEntityResult<User>> UpdateUserRating(string email, int rating)
+    public async Task<GetEntityResult<User>> UpdateUserRatingAsync(string email, int rating)
     {
         var userResult = await this._store.UpdateUserRatingAsync(email, rating);
         if (!userResult.IsSuccess)
@@ -48,7 +48,7 @@ public class UserService : IUserService
         return GetEntityResult<User>.FromFound(user);
     }
 
-    public async Task<GetEntityResult<List<User>>> GetUsersRating()
+    public async Task<GetEntityResult<List<User>>> GetUsersRatingAsync()
     {
         var userResult = await this._store.GetUsersAsync();
         if (!userResult.IsSuccess)

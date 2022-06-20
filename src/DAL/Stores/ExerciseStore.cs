@@ -1,11 +1,12 @@
 ﻿using DAL.Data;
 using Common.DbModels;
 using Common.OperatingModels;
+using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Stores;
 
-public class ExerciseStore
+public class ExerciseStore : IExerciseStore
 {
     private readonly PgDbContext _dbContext;
 
@@ -33,14 +34,14 @@ public class ExerciseStore
         }
     }
     
-    public async Task<GetEntityResult<Exercise>> AddExerciseAsync(string description, string functionName)
+    public async Task<GetEntityResult<Exercise>> AddExerciseAsync(string description, string title)
     {
         try
         {
             var exercise = new Exercise
             {
                 Description = description,
-                Title = functionName,
+                Title = title,
             };
 
             await this._dbContext.Exercises.AddAsync(exercise);

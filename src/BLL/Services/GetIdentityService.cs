@@ -1,16 +1,16 @@
 ﻿using System.Security.Claims;
-using API.Interfaces;
+using BLL.Interfaces;
 using Common.DbModels;
-using DAL.Stores;
 using Common.OperatingModels;
+using DAL.Interfaces;
 
-namespace API.Services;
+namespace BLL.Services;
 
 public class GetIdentityService : IIdentityService
 {
-    private UserStore _store;
+    private IUserStore _store;
 
-    public GetIdentityService(UserStore store)
+    public GetIdentityService(IUserStore store)
     {
         _store = store ?? throw new ArgumentNullException(nameof(store));
     }
