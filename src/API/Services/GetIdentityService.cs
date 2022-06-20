@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using API.Interfaces;
 using Common.DbModels;
-using API.Stores;
+using DAL.Stores;
 using Common.OperatingModels;
 
 namespace API.Services;

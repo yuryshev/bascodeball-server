@@ -1,7 +1,7 @@
 ﻿using Common.DbModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Data;
+namespace DAL.Data;
 
 public class PgDbContext : DbContext
 {

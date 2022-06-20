@@ -1,9 +1,9 @@
-﻿using API.Interfaces;
+﻿using BLL.Interfaces;
 using Common.DbModels;
-using API.Stores;
+using DAL.Stores;
 using Common.OperatingModels;
 
-namespace API.Services;
+namespace BLL.Services;
 
 public class ExerciseService : IExerciseService
 {

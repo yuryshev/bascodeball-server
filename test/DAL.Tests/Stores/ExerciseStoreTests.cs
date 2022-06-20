@@ -1,4 +1,4 @@
-﻿namespace API.Tests.Stores;
+﻿namespace DAL.Tests.Stores;
 
 public class ExerciseStoreTests
 {

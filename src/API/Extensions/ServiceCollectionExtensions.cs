@@ -1,8 +1,10 @@
-﻿using API.Data;
+﻿using DAL.Data;
+using BLL.Interfaces;
 using API.Interfaces;
 using Common.DbModels;
 using API.Services;
-using API.Stores;
+using BLL.Services;
+using DAL.Stores;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;

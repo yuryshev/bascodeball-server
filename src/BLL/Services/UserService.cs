@@ -1,9 +1,9 @@
-﻿using API.Interfaces;
+﻿using BLL.Interfaces;
 using Common.DbModels;
-using API.Stores;
 using Common.OperatingModels;
+using DAL.Stores;
 
-namespace API.Services;
+namespace BLL.Services;
 
 public class UserService : IUserService
 {

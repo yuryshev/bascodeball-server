@@ -1,9 +1,9 @@
-﻿using API.Data;
+﻿using DAL.Data;
 using Common.DbModels;
 using Common.OperatingModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Stores;
+namespace DAL.Stores;
 
 public class TestDataStore
 {

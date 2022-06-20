@@ -1,11 +1,11 @@
-﻿using API.Data;
+﻿using DAL.Data;
 using Common.DbModels;
-using API.Stores;
+using DAL.Stores;
 using Common.OperatingModels;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace API.Tests.Stores;
+namespace DAL.Tests.Stores;
 
 [Collection("Pg db collection")]
 public class UserStoreTests
@@ -43,6 +43,7 @@ public class UserStoreTests
             NickName = "test_login1",
             Picture = "picture1.png",
             Role = "user",
+            ConnectionId = String.Empty
         };
         
         var user2 = new User
@@ -51,6 +52,7 @@ public class UserStoreTests
             NickName = "test_login2",
             Picture = "picture2.png",
             Role = "user",
+            ConnectionId = String.Empty
         };
 
         this._dbContext.AddRange(user1, user2);
@@ -75,6 +77,7 @@ public class UserStoreTests
             NickName = "test_login1",
             Picture = "picture1.png",
             Role = "user",
+            ConnectionId = String.Empty
         };
         
         var user2 = new User
@@ -83,6 +86,7 @@ public class UserStoreTests
             NickName = "test_login2",
             Picture = "picture2.png",
             Role = "user",
+            ConnectionId = String.Empty
         };
 
         this._dbContext.AddRange(user1);

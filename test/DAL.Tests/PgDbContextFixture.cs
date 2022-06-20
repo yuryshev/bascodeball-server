@@ -1,10 +1,10 @@
-﻿using API.Data;
+﻿using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using Xunit;
 
-namespace API.Tests;
+namespace DAL.Tests;
 [CollectionDefinition("Pg db collection", DisableParallelization = true)]
 public class PgDbCollection : ICollectionFixture<PgDbContextFixture>
 {

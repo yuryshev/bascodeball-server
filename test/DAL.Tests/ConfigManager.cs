@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace API.Tests;
+namespace DAL.Tests;
 
 public static class ConfigManager
 {
@@ -8,7 +8,7 @@ public static class ConfigManager
     {
         var configBuilder = new ConfigurationBuilder();
 
-        configBuilder.AddJsonFile("appsettings.APITests.json", false).AddEnvironmentVariables();
+        configBuilder.AddJsonFile("appsettings.DAL.Tests.json", false).AddEnvironmentVariables();
 
         Configuration = configBuilder.Build();
     }

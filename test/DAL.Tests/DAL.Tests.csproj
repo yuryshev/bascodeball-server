@@ -23,7 +23,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\API\API.csproj" />
+      <ProjectReference Include="..\..\src\DAL\DAL.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.DAL.Tests.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
