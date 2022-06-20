@@ -53,6 +53,4 @@ app.UseCors(builder =>
 
 app.MapControllers();
 
-app.UseHealthAllEndpoints();
-
 app.Run();

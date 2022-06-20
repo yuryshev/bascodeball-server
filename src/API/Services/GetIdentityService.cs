@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
-using BLL.Interfaces;
+using API.Interfaces;
 using Common.DbModels;
 using Common.OperatingModels;
 using DAL.Interfaces;
 
-namespace BLL.Services;
+namespace API.Services;
 
 public class GetIdentityService : IIdentityService
 {

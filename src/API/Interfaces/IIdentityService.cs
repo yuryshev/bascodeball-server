@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Common.OperatingModels;
 
-namespace BLL.Interfaces;
+namespace API.Interfaces;
 
 public interface IIdentityService
 {
