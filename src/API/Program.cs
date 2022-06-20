@@ -1,11 +1,7 @@
 using API.Extensions;
 using API.Models.AuthModels;
-using App.Metrics.Health.Builder;
-using App.Metrics.Health.Checks.Sql;
-using Common.ConvertingModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Npgsql; 
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,18 +13,6 @@ serviceCollectionExtensions.AddApiServices(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddCors();
-
-var healthRoot = new HealthBuilder()
-    .OutputHealth.Using<HealthOutputJsonFormatter>()
-    .HealthChecks.RegisterFromAssembly(builder.Services)
-    .HealthChecks.AddSqlCachedCheck(
-        "Pg Database",
-        () => new NpgsqlConnection(pgConnectionString),
-        timeout: TimeSpan.FromSeconds(2),
-        cacheDuration: TimeSpan.FromSeconds(30))
-    .Build();
-
-builder.Services.AddHealth(healthRoot);
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
